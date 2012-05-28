@@ -1,10 +1,10 @@
 {
    "name"           : "notifyit",
    "main"           : "NotifyIt.js",
-   "description"    : "Simple notification tool, designed to alert developer of unit test results.",
+   "description"    : "Simple notification tool, designed to publish notifications.",
    "author"         : "Seth McLaughlin <smclaughlin AT linkedin DOT com>",
    "version"        : "0.0.1",
-   "keywords"       : [ "notifyit", "NotifyIt", "unit tests", "testing", "LinkedIn", "tdd" ],
+   "keywords"       : [ "notifyit", "NotifyIt", "notifications", "LinkedIn", "http", "pubsub", "socketio" ],
    "engines"        : {
       "node"        : ">=0.4.12"
    },
@@ -13,18 +13,18 @@
    },
    "licenses"       : [{
       "type"        : "Apache",
-      "url"         : "https://github.com/linkedin/insframe/blob/master/LICENSE.txt"
+      "url"         : "https://github.com/sethmcl/notifyit/blob/master/LICENSE.txt"
    }],
    "repository"     : {
      "type"         : "git",
      "url"          : "git@github.com:sethmcl/NotifyIt.git"
    },
    "dependencies"   : {
-      "express"     : ">=2.5.2",
-      "socket.io"   : ">=0.8.7",
-      "ejs"         : ">=0.6.1",
-      "colors"      : ">=0.6.0",
-      "jsface"      : ">=2.1.1",
-      "underscore"  : ">=1.3.3"
+      "express"            : ">=2.5.2",
+      "socket.io"          : ">=0.8.7",
+      "socket.io-client"   : ">=0.8.7",
+      "colors"             : ">=0.6.0",
+      "underscore"         : ">=1.3.3",
+      "nodeunit"           : ">=0.0.1"
    }
 }
