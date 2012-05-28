@@ -15,6 +15,10 @@ To use this tool, you'll need to have [node.js][node] (v0.4 or greater) and [npm
     cd notifyit
     npm install
 
+Alternatively, install directly with npm:
+
+    npm install notifyit
+
 ##Usage
 
 To start the server, run:
