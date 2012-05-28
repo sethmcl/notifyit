@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>NotifyIt</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+    <script type="text/javascript">
+      window.config = {
+        host: 'http://<%= host %>',
+        port: '<%= port %>'
+      };
+    </script>
+  </head>
+  <body>
+    <div class="topbar" data-scrollspy="scrollspy" >
+      <div class="topbar-inner">
+        <div class="container">
+          <a class="brand" href="/">NotifyIt</a>
+        </div>
+      </div>
+    </div>
+
+    <div id="content">
+      <p>Congratulations, your NotifyIt server is running. This is a simple example of a web client listening for events. As events are
+      published to the server, you will see them in the console output below.</p>
+
+      <p>To publish an event, try running this curl command:</p>
+
+      <code>
+        curl http://localhost:<%= port %>/pub/test/new-data -d "hello world!"
+      </code>
+      <div id="console"><ul></ul></div>
+    </div>
+
+    <a href="https://github.com/sethmcl/notifyit"><img style="z-index: 1000000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <script src="js/jquery-1.7.1.js"></script>
+    <script src="js/socket.io/socket.io.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

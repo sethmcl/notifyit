@@ -15,8 +15,6 @@ var PORT           = 2012,
  * Constructor
  */
 function NotifyIt( port ) {
-  var channels = {};
-
   initEnvironment( port );
   initRouting();
   initSocketIO();
@@ -62,19 +60,20 @@ function NotifyIt( port ) {
   function initRouting() {
     /** Index page. */
     app.get('/', function(request, response) {
-      response.render('index', { hostname: hostname, port: port });
+      response.render('index', { host: hostname, port: port });
     });
 
     /** Post new result */
-    app.post('/pub/:channel', routePubRequest );
+    app.post('/pub/:channel/:eventName', routePubRequest );
   }
 
   /**
    * Handle HTTP request to publish data
    */
   function routePubRequest(request, response) {
-    var data    = request.body,
-        channel = request.params.channel,
+    var data      = request.body,
+        channel   = request.params.channel,
+        eventName = request.params.eventName,
         obj;
 
     if(request.is('json')) {
@@ -88,7 +87,7 @@ function NotifyIt( port ) {
     }
 
     if(obj) {
-      publish( channel, obj );
+      publish( channel, eventName, obj );
     }
 
     response.send(200);
@@ -97,9 +96,18 @@ function NotifyIt( port ) {
   /**
    * Publish data to listeners
    */
-  function publish( channel, obj ) {
-    var evt       = channel + ':new-data';
-    io.sockets.emit(evt, obj);
+  function publish( channel, eventName, obj ) {
+    var evt     = channel + ':' + eventName,
+        wrapper = {
+          channel:   channel,
+          eventName: eventName,
+          data:      obj
+        };
+
+
+    console.log('   info -'.cyan, 'publishing event'.white, evt.yellow, 'with data'.white, obj.toString().yellow);
+    io.sockets.emit(evt, wrapper);
+    io.sockets.emit('all', wrapper);
   }
 
   /**
@@ -110,20 +118,7 @@ function NotifyIt( port ) {
     io.set('log level', 1);
 
     io.sockets.on('connection', function onConnection(socket) {
-      var socketId = socket.id;
       socket.emit('connected');
-
-      socket.on('subscribe', function(channel, fn) {
-        if(typeof channel === 'string' && channel.length > 0) {
-          if(!channels[channel]) {
-            channels[channel] = {};
-          }
-          channels[channel][socket.id] = socket;
-          fn(0);
-        } else {
-          fn(1);
-        }
-      });
     });
   }
 
